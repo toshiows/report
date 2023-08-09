@@ -1,5 +1,6 @@
 package org.br.mineradora.service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import org.br.mineradora.dto.OpportunityDTO;
@@ -17,4 +18,5 @@ public interface OpportunityService {
 	
 	List<OpportunityDTO> generateOpportunityData();
 	
+	ByteArrayInputStream generateCSVOpportunityReport();
 }

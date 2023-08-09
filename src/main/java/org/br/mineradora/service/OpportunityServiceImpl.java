@@ -1,5 +1,7 @@
 package org.br.mineradora.service;
 
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +13,7 @@ import org.br.mineradora.entity.OpportunityEntity;
 import org.br.mineradora.entity.QuotationEntity;
 import org.br.mineradora.repository.OpportunityRepository;
 import org.br.mineradora.repository.QuotationRepository;
+import org.br.mineradora.utils.CSVHelper;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -49,6 +52,22 @@ public class OpportunityServiceImpl implements OpportunityService{
 	public List<OpportunityDTO> generateOpportunityData() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ByteArrayInputStream generateCSVOpportunityReport() {
+		List<OpportunityDTO> opportunityList = new ArrayList<>();
+		
+		opportunityRepository.findAll().list().forEach(item -> {
+			opportunityList.add(OpportunityDTO.builder()
+					.proposalId(item.getProposalId())
+					.priceTonne(item.getPriceTonne())
+					.customer(item.getCustomer())
+					.lastDollarQuotation(item.getLastDollarQuotation())
+					.build());
+		});
+				
+		return CSVHelper.OpportunitiesToCSV(opportunityList);
 	}
 
 }
