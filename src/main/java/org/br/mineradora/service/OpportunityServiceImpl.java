@@ -17,6 +17,7 @@ import org.br.mineradora.utils.CSVHelper;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class OpportunityServiceImpl implements OpportunityService{
@@ -43,14 +44,17 @@ public class OpportunityServiceImpl implements OpportunityService{
 	}
 
 	@Override
+	@Transactional
 	public void saveQuotation(QuotationDTO quotation) {
-		// TODO Auto-generated method stub
+		QuotationEntity createQuotation = new QuotationEntity();
+		createQuotation.setDate(new Date());
+		createQuotation.setCurrencyPrice(quotation.getCurrencyPrice());
 		
+		quotationRepository.persist(createQuotation);
 	}
 
 	@Override
 	public List<OpportunityDTO> generateOpportunityData() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
